@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
 import pandas as pd
 
-data = pd.read_csv('./coordinates.csv')
+data = pd.read_csv('./coordinates_annotated.csv')
 scores_data = data.groupby('year')['score'].mean()
 years = scores_data.index.values
 scores = scores_data.to_numpy()
