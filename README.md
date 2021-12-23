@@ -6,15 +6,16 @@ The creation of large digital databases on urban development is a strategic chal
 
 The scale is restricted to Jerusalem in our project. Jerusalem is one of the oldest cities in the world and is considered holy to the three major Abrahamic religions—Judaism, Christianity, and Islam. We did georeferencing among Jerusalem’s historical maps from 1840 to 1949 and the modern map from OpenStreetMap so that the overlaid maps will reveal changes over time and enable map analysis and discovery. We focused on the wall of the Old City as the morphological feature to do georeferencing because the region outside the Old City has seen many new constructions while the Old City has not great changes and the closed polygon of the wall is relatively more consistent than other features like road networks. More specifically, we used dhSegment, a historical document segmentation tool, to extract the wall of the Old City of Jerusalem and proposed an alignment algorithm exploiting the geometrical features of the wall to align the maps.
 
+## Usage
 
+```
+pip install -r requirements.txt
+```
 
-## Deliverables
+```
+python align.py
+```
 
-- The latitudes and longitudes of the four vertices of the raw maps.
-- Preprocessed (cropped and resized) patches of the raw maps with images information (including the position of the sub-image in the raw map) stored in a csv file.
-- 46 1000 * 1000 annotations of the Old City area.
-- Trained segmentation model.
-- Code and instructions to reproduce the results on github.
 
 
 
@@ -22,7 +23,7 @@ The scale is restricted to Jerusalem in our project. Jerusalem is one of the old
 
 ### Dataset
 
-- 126 historical maps of Jerusalem from 1837 to 1938.
+- 126 historical maps of Jerusalem from 1837 to 1938. (https://drive.google.com/drive/folders/0AJMw_BIszSkYUk9PVA)
 
 - Modern geographical data of Jerusalem from OpenStreetMap.
 
@@ -114,44 +115,6 @@ Since the final goal is to get the latitudes and longitudes in the geographic co
 
 
 
-## Results
-
-### Wall Extraction
-
-For the wall extraction step, the neural network generally gives good predictions. 
-
-P13 第一行 + 年份
-
-But for some maps, there are some concavity and convexity in the predictions, but these flaws won't influence the alignment as shown in the next section.
-
-P14 第一行 + 年份
-
- 
-
-### Wall Alignment
-
-For good predictions in the previous segmentation step, the alignment algorithm can give a satisfying alignment. 
-
-(P13 第3、4列图)
-
-The bias generally is caused by the intrinsic difference of the wall in the original map and the reference wall. The maps whose wall polygons have large differences from the nowadays wall polygon were generally produced in the early 19 century. Take the map in 1837 and 1845 for example.
-
-(P13 第1、2列图)
-
-We add the main road from OpenStreetMap to the reference map and align them to the historical maps. The result also shows that the alignment results of more recent maps are better.
-
-(mid term ppt P14、15、16)
-
-We plotted the overlapping area ratio with regard to the year of the map and find that the alignment result of early 19 century's maps are not as good as that of later maps, which is consistent with our previous observations.
-
-(P15 图)
-
-
-
-Even for some maps with not that satisfying prediction results, the robustness of the alignment algorithms proposed make the polygons generally align together, thus the coordinates obtained are still reliable. 
-
-(P14 第 1、2、3、4 列)
-
 
 
 ### Coordinate System Transformation
@@ -169,118 +132,6 @@ The results are stored in a csv file shown as follows.
 - Only the closed polygon of the wall are utilized and segmented.  The morphological feature of road networks and buildings can also be exploited in future works.
 
 
-
-## Project Plan and Milestones
-
-### Milestones
-
-Do survey on semantic segmentation and registration algorithms, get familiar with our dataset and decide what feature to be used for alignment.
-
-Preprocess the dataset.
-
-Annotate the maps and use dhSegment for segmentation.
-
-Design and implement the alignment algorithms.
-
-Do coordinate system transformation.
-
-Further improve the robustness of the alignment algorithm and connect the processing steps.
-
-Sort out the code and write the report.
-
- 
-
-### Plan
-
-By Week 4     
-
-Brainstorm project ideas.
-
-Prepare slides for initial project idea presentation.
-
-✓
-
-By Week 6     
-
-Study relevant works about road extraction and alignment.
-
-Use Procreate to produce road-annotated images as the training dataset.
-
-Study and apply Projet JADIS to our dataset.
-
-✓
-
-By Week 8     
-
-Filter and preprocess the dataset for training and testing.
-
-Try various key point selection algorithms like SIFT and SURF.
-
-Try various existing point cloud registration algorithms like ICP and TEASER-plusplus.
-
-Determine to use the wall for alignment.
-
-Design and develop wall alignment algorithms.
-
-✓
-
-By Week 10    
-
-Use Procreate to produce wall-annotated images as the training dataset.
-
-Train the dhSegment model from scratch and use it for wall extraction.
-
-Implement the image postprocessing methods.
-
-Further improve the performance of the alignment algorithm.
-
-Prepare for the midterm presentation.
-
-✓
-
-By Week 11    
-
-Produce more wall-annotated images.
-
-Fine-tune the dhSegment model to get better segmentation results.
-
-\--
-
-By Week 12    
-
-Further improve the performance and robustness of the alignment algorithm to make it robust to poorly predicted data.
-
-Transform the coordinates of the image patches in the reference image coordinate system to the latitudes and longitudes of the raw maps
-
-Make all the processing steps a pipeline and user-friendly.
-
-\--
-
-By Week 13    
-
-Sort out the codes and push them to GitHub repository.
-
-Write the project report.
-
-Prepare slides for final presentation.
-
-\--
-
-By Week 14    
-
-Finish presentation slides and report writing.
-
-Presentation rehearsal and final presentation.
-
- 
-
-## Github Link
-
-https://github.com/mzp0514/JerusalemGeoreferencing
-
- 
-
- 
 
 ## References
 
